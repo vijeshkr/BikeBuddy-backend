@@ -1,7 +1,7 @@
-const userModel = require('../models/userModel');
+const userModel = require('../../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { sendVerificationEmail } = require('../common/utils');
+const { sendVerificationEmail } = require('../../common/utils');
 
 // Signup controller
 const signup = async (req, res) => {
@@ -20,7 +20,9 @@ const signup = async (req, res) => {
     const hashedPassword = bcrypt.hashSync(password,salt);
 
     // Create verification token
-    const verificationToken = jwt.sign({email}, process.env.JWT_SECRET);
+    const verificationToken = jwt.sign({email}, process.env.JWT_SECRET,{
+        expiresIn: '5m'
+    });
 
     try {
         // Check if user already exists

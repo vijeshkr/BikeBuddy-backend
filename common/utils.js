@@ -15,7 +15,7 @@ const sendVerificationEmail = async (email,link) => {
         await transporter.sendMail({
             to: email,
             subject: 'Verify your email',
-            html: `Please <a href="${link}">Click here</a> to verify your email.`
+            html: `Please <a href="${link}">Click here</a> to verify your email. The link will expires in 5 minutes`
         });
         console.log('Verification email sent')
     } catch (error) {

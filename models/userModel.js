@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 // User registration schema
@@ -11,6 +12,19 @@ const userSchema = new mongoose.Schema({
 },{
     timestamps: true
 });
+
+// Token generation
+userSchema.methods.generateAuthToken = async function () {
+    try {
+        let tokenGen = jwt.sign({_id: this._id, role: this.role }, process.env.JWT_SECRET,{
+            expiresIn: "1d",
+        });
+        return tokenGen;
+    } catch (error) {
+        console.log('Error while generating auth token: ', error);
+        res.status(422).json(error);
+        }
+}
 
 // Create user model
 const userModel = mongoose.model('user',userSchema);
