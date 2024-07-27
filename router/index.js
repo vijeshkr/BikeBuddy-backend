@@ -5,6 +5,8 @@ const userLogin = require('../controller/common/userLogin');
 const resetPassword = require('../controller/common/resetPassword');
 const validateResetToken = require('../controller/common/validateResetToken');
 const newPassword = require('../controller/common/newPassword');
+const authMiddleware = require('../middlewares/authMiddleware');
+const userDetails = require('../controller/common/userDetails');
 
 // Router object
 const router = express.Router();
@@ -20,6 +22,8 @@ router.post('/forgot-password',resetPassword);
 router.get('/validate-reset/:token',validateResetToken);
 // Reset password
 router.post('/reset-password',newPassword);
+// User detais
+router.get('/user-details',authMiddleware,userDetails);
 
 // Routes for customer 
 // User registration

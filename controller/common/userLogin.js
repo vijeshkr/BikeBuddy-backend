@@ -42,7 +42,7 @@ const userLogin = async (req, res) => {
             const token = await user.generateAuthToken();
 
             // Generate cookie
-            res.cookie('AccessToken',token, {
+            res.cookie('accessToken',token, {
                 expires: new Date(Date.now() + 86400000),
                 httpOnly: true
             });
