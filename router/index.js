@@ -7,6 +7,7 @@ const validateResetToken = require('../controller/common/validateResetToken');
 const newPassword = require('../controller/common/newPassword');
 const authMiddleware = require('../middlewares/authMiddleware');
 const userDetails = require('../controller/common/userDetails');
+const logout = require('../controller/common/userLogout');
 
 // Router object
 const router = express.Router();
@@ -16,6 +17,8 @@ const router = express.Router();
 router.get('/verify-email/:token',verifyEmail);
 // User login
 router.post('/login',userLogin);
+// User logout
+router.post('/logout',logout)
 // Forgot password email verification
 router.post('/forgot-password',resetPassword);
 // Validate reset token
