@@ -8,6 +8,7 @@ const newPassword = require('../controller/common/newPassword');
 const authMiddleware = require('../middlewares/authMiddleware');
 const userDetails = require('../controller/common/userDetails');
 const logout = require('../controller/common/userLogout');
+const userPasswordChange = require('../controller/common/userPasswordChange');
 
 // Router object
 const router = express.Router();
@@ -27,6 +28,8 @@ router.get('/validate-reset/:token',validateResetToken);
 router.post('/reset-password',newPassword);
 // User detais
 router.get('/user-details',authMiddleware,userDetails);
+// User password change
+router.post('/user-password-change',authMiddleware,userPasswordChange);
 
 // Routes for customer 
 // User registration
