@@ -9,31 +9,37 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const userDetails = require('../controller/common/userDetails');
 const logout = require('../controller/common/userLogout');
 const userPasswordChange = require('../controller/common/userPasswordChange');
+const updateProfile = require('../controller/common/updateProfile');
+const removeProfilePicture = require('../controller/common/removeProfilePicture');
 
 // Router object
 const router = express.Router();
 
 // Common routes
 // Email verification
-router.get('/verify-email/:token',verifyEmail);
+router.get('/verify-email/:token', verifyEmail);
 // User login
-router.post('/login',userLogin);
+router.post('/login', userLogin);
 // User logout
-router.post('/logout',logout)
+router.post('/logout', logout)
 // Forgot password email verification
-router.post('/forgot-password',resetPassword);
+router.post('/forgot-password', resetPassword);
 // Validate reset token
-router.get('/validate-reset/:token',validateResetToken);
+router.get('/validate-reset/:token', validateResetToken);
 // Reset password
-router.post('/reset-password',newPassword);
+router.post('/reset-password', newPassword);
 // User detais
-router.get('/user-details',authMiddleware,userDetails);
+router.get('/user-details', authMiddleware, userDetails);
 // User password change
-router.post('/user-password-change',authMiddleware,userPasswordChange);
+router.post('/user-password-change', authMiddleware, userPasswordChange);
+// Update profile
+router.put('/update-profile', authMiddleware, updateProfile);
+// Remove profile picture only
+router.patch('/remove-profile-picture',authMiddleware,removeProfilePicture);
 
 // Routes for customer 
 // User registration
-router.post('/registration',signup);
+router.post('/registration', signup);
 
 // Routes for admin
 
