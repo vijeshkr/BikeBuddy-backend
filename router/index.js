@@ -13,6 +13,8 @@ const updateProfile = require('../controller/common/updateProfile');
 const removeProfilePicture = require('../controller/common/removeProfilePicture');
 const addServicePackage = require('../controller/admin/addServicePackage');
 const updateServicePackage = require('../controller/admin/updateServicePackage');
+const deleteServicePackage = require('../controller/admin/deleteServicePackage');
+const getAllServicePackages = require('../controller/common/getAllServicePackages');
 
 // Router object
 const router = express.Router();
@@ -48,6 +50,10 @@ router.post('/registration', signup);
 router.post('/add-package',authMiddleware,addServicePackage);
 // Update service packages
 router.put('/update-package',authMiddleware,updateServicePackage);
+// Delete service packages
+router.delete('/delete-package',authMiddleware,deleteServicePackage);
+// Get all service packages
+router.get('/get-packages',authMiddleware,getAllServicePackages);
 
 // Routes for mechanic
 
