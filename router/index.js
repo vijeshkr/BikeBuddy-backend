@@ -11,6 +11,7 @@ const logout = require('../controller/common/userLogout');
 const userPasswordChange = require('../controller/common/userPasswordChange');
 const updateProfile = require('../controller/common/updateProfile');
 const removeProfilePicture = require('../controller/common/removeProfilePicture');
+const addServicePackage = require('../controller/admin/addServicePackage');
 
 // Router object
 const router = express.Router();
@@ -42,6 +43,8 @@ router.patch('/remove-profile-picture',authMiddleware,removeProfilePicture);
 router.post('/registration', signup);
 
 // Routes for admin
+// Add service packages
+router.post('/add-package',authMiddleware,addServicePackage);
 
 // Routes for mechanic
 
