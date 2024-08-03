@@ -1,9 +1,9 @@
 const servicePackageModel = require('../../models/servicePackageModel');
 
 const deleteServicePackage = async (req, res) => {
-    const { _id } = req.body;
+    const { packageId } = req.body;
     const userRole = req.userRole;
-
+    
     try {
         // Checking current user is admin or not
         if (userRole !== 'admin') {
@@ -14,7 +14,7 @@ const deleteServicePackage = async (req, res) => {
         }
 
         // Find and delete the package by id
-        const deletedPackage = await servicePackageModel.findByIdAndDelete(_id);
+        const deletedPackage = await servicePackageModel.findByIdAndDelete(packageId);
 
         if (!deletedPackage) {
             return res.status(404).json({
