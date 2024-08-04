@@ -16,6 +16,7 @@ const updateServicePackage = require('../controller/admin/updateServicePackage')
 const deleteServicePackage = require('../controller/admin/deleteServicePackage');
 const getAllServicePackages = require('../controller/common/getAllServicePackages');
 const addIndividualWork = require('../controller/admin/addIndividualWork');
+const getIndividualWorks = require('../controller/common/getIndividualWorks');
 
 // Router object
 const router = express.Router();
@@ -41,6 +42,10 @@ router.post('/user-password-change', authMiddleware, userPasswordChange);
 router.put('/update-profile', authMiddleware, updateProfile);
 // Remove profile picture only
 router.patch('/remove-profile-picture',authMiddleware,removeProfilePicture);
+// Get all service packages
+router.get('/get-packages',authMiddleware,getAllServicePackages);
+// Get all individual works
+router.get('/get-individual-works',authMiddleware,getIndividualWorks);
 
 // Routes for customer 
 // User registration
@@ -53,8 +58,6 @@ router.post('/add-package',authMiddleware,addServicePackage);
 router.put('/update-package',authMiddleware,updateServicePackage);
 // Delete service packages
 router.delete('/delete-package',authMiddleware,deleteServicePackage);
-// Get all service packages
-router.get('/get-packages',authMiddleware,getAllServicePackages);
 // Add individual works
 router.post('/add-individual-work',authMiddleware,addIndividualWork);
 
