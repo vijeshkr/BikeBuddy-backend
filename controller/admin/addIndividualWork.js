@@ -21,14 +21,14 @@ const addIndividualWork = async (req, res) => {
             });
         }
 
-        // Create new package
+        // Create new work
         const newIndividualWork = new individualWorkModel({
             workName,
             price,
             suitable
         });
 
-        // Save package
+        // Save work
         const savedWork = await newIndividualWork.save();
         res.status(200).json({
             message: 'New work created',
