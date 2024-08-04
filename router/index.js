@@ -18,6 +18,7 @@ const getAllServicePackages = require('../controller/common/getAllServicePackage
 const addIndividualWork = require('../controller/admin/addIndividualWork');
 const getIndividualWorks = require('../controller/common/getIndividualWorks');
 const updateIndividualWork = require('../controller/admin/updateIndividualWork');
+const deleteIndividualWork = require('../controller/admin/deleteIndividualWork');
 
 // Router object
 const router = express.Router();
@@ -63,6 +64,8 @@ router.delete('/delete-package',authMiddleware,deleteServicePackage);
 router.post('/add-individual-work',authMiddleware,addIndividualWork);
 // Update individual work
 router.put('/update-individual-work',authMiddleware,updateIndividualWork);
+// Delete individual work
+router.delete('/delete-individual-work',authMiddleware,deleteIndividualWork);
 
 // Routes for mechanic
 

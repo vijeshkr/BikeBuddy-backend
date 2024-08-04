@@ -1,32 +1,32 @@
-const servicePackageModel = require('../../models/servicePackageModel');
+const individualWorkModel = require('../../models/individualWorkModel');
 
-const deleteServicePackage = async (req, res) => {
-    const { packageId } = req.body;
+const deleteIndividualWork = async (req, res) => {
+    const { workId } = req.body;
     const userRole = req.userRole;
     
     try {
         // Checking current user is admin or not
         if (userRole !== 'admin') {
             return res.status(403).json({
-                message: 'Only admin can delete packages',
+                message: 'Only admin can delete works',
                 success: false
             });
         }
 
-        // Find and delete the package by id
-        const deletedPackage = await servicePackageModel.findByIdAndDelete(packageId);
+        // Find and delete the work by id
+        const deletedWork = await individualWorkModel.findByIdAndDelete(workId);
 
-        if (!deletedPackage) {
+        if (!deletedWork) {
             return res.status(404).json({
-                message: 'Package not found',
+                message: 'Work not found',
                 success: false
             });
         }
 
         return res.status(200).json({
-            message: 'Package successfully deleted',
+            message: 'Work successfully deleted',
             success: true,
-            data: deletedPackage
+            data: deletedWork
         });
 
     } catch (error) {
@@ -37,4 +37,4 @@ const deleteServicePackage = async (req, res) => {
     }
 }
 
-module.exports = deleteServicePackage;
+module.exports = deleteIndividualWork;
