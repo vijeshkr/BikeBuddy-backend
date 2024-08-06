@@ -19,6 +19,8 @@ const addIndividualWork = require('../controller/admin/addIndividualWork');
 const getIndividualWorks = require('../controller/common/getIndividualWorks');
 const updateIndividualWork = require('../controller/admin/updateIndividualWork');
 const deleteIndividualWork = require('../controller/admin/deleteIndividualWork');
+const addNewVehicle = require('../controller/admin/addNewVehicle');
+const getAllVehicles = require('../controller/common/getAllVehicles');
 
 // Router object
 const router = express.Router();
@@ -48,6 +50,8 @@ router.patch('/remove-profile-picture',authMiddleware,removeProfilePicture);
 router.get('/get-packages',authMiddleware,getAllServicePackages);
 // Get all individual works
 router.get('/get-individual-works',authMiddleware,getIndividualWorks);
+// Get all vehicles
+router.get('/get-all-vehicles',authMiddleware,getAllVehicles);
 
 // Routes for customer 
 // User registration
@@ -66,6 +70,8 @@ router.post('/add-individual-work',authMiddleware,addIndividualWork);
 router.put('/update-individual-work',authMiddleware,updateIndividualWork);
 // Delete individual work
 router.delete('/delete-individual-work',authMiddleware,deleteIndividualWork);
+// Add new vehicle
+router.post('/add-new-vehicle',authMiddleware,addNewVehicle);
 
 // Routes for mechanic
 
