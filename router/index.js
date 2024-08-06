@@ -21,6 +21,10 @@ const updateIndividualWork = require('../controller/admin/updateIndividualWork')
 const deleteIndividualWork = require('../controller/admin/deleteIndividualWork');
 const addNewVehicle = require('../controller/admin/addNewVehicle');
 const getAllVehicles = require('../controller/common/getAllVehicles');
+const addNewSpare = require('../controller/admin/addNewSpare');
+const getAllSpare = require('../controller/common/getAllSpare');
+const deleteSpare = require('../controller/admin/deleteSpare');
+const updateSpare = require('../controller/admin/updateSpare');
 
 // Router object
 const router = express.Router();
@@ -52,6 +56,8 @@ router.get('/get-packages',authMiddleware,getAllServicePackages);
 router.get('/get-individual-works',authMiddleware,getIndividualWorks);
 // Get all vehicles
 router.get('/get-all-vehicles',authMiddleware,getAllVehicles);
+// Get all spare
+router.get('/get-all-spare',authMiddleware,getAllSpare);
 
 // Routes for customer 
 // User registration
@@ -72,6 +78,12 @@ router.put('/update-individual-work',authMiddleware,updateIndividualWork);
 router.delete('/delete-individual-work',authMiddleware,deleteIndividualWork);
 // Add new vehicle
 router.post('/add-new-vehicle',authMiddleware,addNewVehicle);
+// Add new spare
+router.post('/add-new-spare',authMiddleware,addNewSpare);
+// Delete spare
+router.delete('/delete-spare/:spareId',authMiddleware,deleteSpare);
+// Update spare
+router.put('/update-spare/:spareId',authMiddleware,updateSpare);
 
 // Routes for mechanic
 
