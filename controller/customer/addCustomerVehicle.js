@@ -3,11 +3,21 @@ const customerVehicleModel = require('../../models/customerVehicleModel');
 const addCustomerVehicle = async (req, res) => {
     const { customer, modelName, registrationNumber, registrationDate } = req.body;
 
+
     try {
         // Check all fields are filled or not
         if (!customer || !modelName || !registrationNumber || !registrationDate) {
             return res.status(400).json({
                 message: 'All fields are required',
+                success: false
+            });
+        }
+
+        // Check if the registration number is unique
+        const existingVehicle = await customerVehicleModel.findOne({ registrationNumber });
+        if (existingVehicle) {
+            return res.status(400).json({
+                message: 'Registration number already exists',
                 success: false
             });
         }

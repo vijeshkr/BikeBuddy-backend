@@ -7,7 +7,8 @@ const customerVehicleSchema = new mongoose.Schema({
         required: true,
     },
     modelName: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'vehicles',
         required: true,
     },
     registrationNumber: {
@@ -42,8 +43,6 @@ customerVehicleSchema.methods.updateFreeServiceEligibility = async function () {
     } else {
         this.freeServiceEligibility = true;
     }
-
-    await this.save();
 }
 
 const customerVehicleModel = mongoose.model('customerVehicle', customerVehicleSchema);
