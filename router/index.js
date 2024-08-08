@@ -25,6 +25,7 @@ const addNewSpare = require('../controller/admin/addNewSpare');
 const getAllSpare = require('../controller/common/getAllSpare');
 const deleteSpare = require('../controller/admin/deleteSpare');
 const updateSpare = require('../controller/admin/updateSpare');
+const addCustomerVehicle = require('../controller/customer/addCustomerVehicle');
 
 // Router object
 const router = express.Router();
@@ -62,6 +63,8 @@ router.get('/get-all-spare',authMiddleware,getAllSpare);
 // Routes for customer 
 // User registration
 router.post('/registration', signup);
+// Add vehicle
+router.post('/add-vehicle',authMiddleware,addCustomerVehicle);
 
 // Routes for admin
 // Add service packages
