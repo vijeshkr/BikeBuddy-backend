@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Send verification email
-const sendVerificationEmail = async (email,link) => {
+const sendVerificationEmail = async (email, link) => {
     try {
         await transporter.sendMail({
             to: email,
@@ -20,12 +20,12 @@ const sendVerificationEmail = async (email,link) => {
             html: `Please <a href="${link}">Click here</a> to verify your email. The link will expires in 5 minutes`
         });
     } catch (error) {
-        console.error('Error sending verification email: ',error);
+        console.error('Error sending verification email: ', error);
     }
 }
 
 // Send password reset email
-const sendPasswordResetEmail = async (email,link) => {
+const sendPasswordResetEmail = async (email, link) => {
     try {
         await transporter.sendMail({
             to: email,
@@ -33,13 +33,13 @@ const sendPasswordResetEmail = async (email,link) => {
             html: `Please <a href='${link}'>Click here<a/> to reset your password. The link will expires in 5 minutes`
         });
     } catch (error) {
-        console.error('Error sending reset password mail: ',error);
+        console.error('Error sending reset password mail: ', error);
     }
 }
 
 // Generate reset token
 const generateResetToken = (email) => {
-    return jwt.sign({email}, process.env.JWT_SECRET, {expiresIn: "5m"});
+    return jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "5m" });
 }
 
 // Save reset token to db
@@ -52,9 +52,16 @@ const saveResetTokenToDB = async (email, token, expiry) => {
         });
         await saveToken.save();
     } catch (error) {
-        console.error('Error saving reset token to database: ',error);
+        console.error('Error saving reset token to database: ', error);
     }
 }
+
+// Utility function to normalize date to yyyy-mm-dd format
+const normalizeDate = (date) => {
+    const d = new Date(date);
+    // Returns date in yyyy-mm-dd format
+    return d.toISOString().split('T')[0];
+};
 
 module.exports = {
     transporter,
@@ -62,4 +69,5 @@ module.exports = {
     generateResetToken,
     sendPasswordResetEmail,
     saveResetTokenToDB,
+    normalizeDate,
 }

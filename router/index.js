@@ -28,6 +28,7 @@ const updateSpare = require('../controller/admin/updateSpare');
 const addCustomerVehicle = require('../controller/customer/addCustomerVehicle');
 const getAllCustomerVehicles = require('../controller/admin/getAllCustomerVehicles');
 const getCustomerVehicles = require('../controller/customer/getCustomerVehicles');
+const applyLeave = require('../controller/mechanic/applyLeave');
 
 // Router object
 const router = express.Router();
@@ -95,5 +96,7 @@ router.put('/update-spare/:spareId',authMiddleware,updateSpare);
 router.get('/get-all-customer-vehicles',authMiddleware,getAllCustomerVehicles);
 
 // Routes for mechanic
+// Apply leave
+router.post('/apply-leave',authMiddleware,applyLeave);
 
 module.exports = router;

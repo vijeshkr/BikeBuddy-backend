@@ -6,7 +6,7 @@ const getCustomerVehicles = async (req, res) => {
 
     try {
         // Fetch vehicles for the specific customer id
-        const vehicles = await customerVehicleModel.find({ customer: customerId}).populate('customer');
+        const vehicles = await customerVehicleModel.find({ customer: customerId}).populate('modelName');
 
         if(vehicles.length === 0) {
             return res.status(404).json({
