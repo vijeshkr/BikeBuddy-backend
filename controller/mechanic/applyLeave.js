@@ -34,6 +34,14 @@ const applyLeave = async (req, res) => {
             });
         }
 
+        // Check if halfDay is false and startDate and endDate are the same day
+        if (!halfDay && normalizeDate(start) === normalizeDate(end)) {
+            return res.status(400).json({
+                message: 'Date mismatch',
+                success: false
+            });
+        }
+
         // Create new leave request
         const newLeave = new leaveModel({
             mechanicId: userId,
