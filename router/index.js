@@ -30,6 +30,8 @@ const getAllCustomerVehicles = require('../controller/admin/getAllCustomerVehicl
 const getCustomerVehicles = require('../controller/customer/getCustomerVehicles');
 const applyLeave = require('../controller/mechanic/applyLeave');
 const getMechanicLeaves = require('../controller/mechanic/getMechanicLeaves');
+const addNewUser = require('../controller/admin/addNewUser');
+const getUsers = require('../controller/admin/getUsers');
 
 // Router object
 const router = express.Router();
@@ -95,6 +97,10 @@ router.delete('/delete-spare/:spareId',authMiddleware,deleteSpare);
 router.put('/update-spare/:spareId',authMiddleware,updateSpare);
 // Get all customer vehicles
 router.get('/get-all-customer-vehicles',authMiddleware,getAllCustomerVehicles);
+// Add new user
+router.post('/add-new-user',authMiddleware,addNewUser);
+// Get users by role
+router.get('/get-users/:role',authMiddleware,getUsers);
 
 // Routes for mechanic
 // Apply leave
