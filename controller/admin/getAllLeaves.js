@@ -14,7 +14,7 @@ const getAllLeaves = async (req, res) => {
             });
         }
 
-        const leaves = await leaveModel.find();
+        const leaves = await leaveModel.find().populate('mechanicId');
 
         if (leaves.length === 0) {
             return res.status(404).json({
