@@ -32,6 +32,7 @@ const applyLeave = require('../controller/mechanic/applyLeave');
 const getMechanicLeaves = require('../controller/mechanic/getMechanicLeaves');
 const addNewUser = require('../controller/admin/addNewUser');
 const getUsers = require('../controller/admin/getUsers');
+const getAllLeaves = require('../controller/admin/getAllLeaves');
 
 // Router object
 const router = express.Router();
@@ -101,6 +102,8 @@ router.get('/get-all-customer-vehicles',authMiddleware,getAllCustomerVehicles);
 router.post('/add-new-user',authMiddleware,addNewUser);
 // Get users by role
 router.get('/get-users/:role',authMiddleware,getUsers);
+// Get all leave
+router.get('/get-all-leaves',authMiddleware,getAllLeaves);
 
 // Routes for mechanic
 // Apply leave
