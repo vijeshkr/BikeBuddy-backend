@@ -7,15 +7,16 @@ const addNewUser = async (req, res) => {
     const { name, email, password, role } = req.body;
 
     // Checking all fields filled or not
-    if(!name || !email || !password){
-        return res.status(422).json({message: 'Please fill all fields',
+    if (!name || !email || !password) {
+        return res.status(422).json({
+            message: 'Please fill all fields',
             success: false
         });
     }
-    
+
     // Hashing password
     const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password,salt);
+    const hashedPassword = bcrypt.hashSync(password, salt);
 
     try {
 
@@ -26,23 +27,29 @@ const addNewUser = async (req, res) => {
                 success: false
             });
         }
-        
+
         // Check if user already exists
         const existingUser = await userModel.findOne({ email });
-        if(existingUser){
+        if (existingUser) {
             // If email is already verified, return user already exists
-            if(existingUser.isVerified){
-                return res.status(400).json({ message: 'User with this email already exists',
+            if (existingUser.isVerified) {
+                return res.status(400).json({
+                    message: 'User with this email already exists',
                     success: false
                 });
-            }else{
+            } else {
                 existingUser.name = name;
                 existingUser.password = hashedPassword;
                 existingUser.role = role;
                 await existingUser.save();
 
-                return res.status(200).json({ message: 'User updated. Please verify your email.',
-                    success: true
+                // Response with user data excluding password
+                const { password, ...otherData } = existingUser.toObject();
+
+                return res.status(200).json({
+                    message: 'User updated. Please verify your email.',
+                    success: true,
+                    data: otherData
                 })
             }
         }
@@ -58,14 +65,20 @@ const addNewUser = async (req, res) => {
 
         await newUser.save();
 
-        res.status(200).json({ message: 'New user created',
-            success: true
-        })
+        // Response with user data excluding password
+        const { password, ...otherData } = newUser.toObject();
+
+        res.status(200).json({
+            message: 'New user created',
+            success: true,
+            data: otherData
+        });
     } catch (error) {
         console.error('Error: ', error);
-        res.status(500).json({ message: 'Error during registration',
+        res.status(500).json({
+            message: 'Error during registration',
             success: false
-         });
+        });
     }
 };
 
