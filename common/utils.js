@@ -63,6 +63,25 @@ const normalizeDate = (date) => {
     return d.toISOString().split('T')[0];
 };
 
+// Send leave approval or rejection mail
+const sendLeaveStatusMail = async (email, status, startDate, endDate) => {
+    try {
+
+        const start = new Date(startDate).toLocaleDateString();
+        const end = new Date(endDate).toLocaleDateString();
+
+        await transporter.sendMail({
+            to: email,
+            subject: `Your Leave Request has been ${status}`,
+            text: `Your leave request from ${start} to ${end} has been ${status}.`
+        });
+
+        console.log(`Leave status email sent to ${email} with status ${status}`);
+    } catch (error) {
+        console.error('Error sending verification email: ', error);
+    }
+}
+
 module.exports = {
     transporter,
     sendVerificationEmail,
@@ -70,4 +89,5 @@ module.exports = {
     sendPasswordResetEmail,
     saveResetTokenToDB,
     normalizeDate,
+    sendLeaveStatusMail,
 }

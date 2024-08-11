@@ -33,6 +33,7 @@ const getMechanicLeaves = require('../controller/mechanic/getMechanicLeaves');
 const addNewUser = require('../controller/admin/addNewUser');
 const getUsers = require('../controller/admin/getUsers');
 const getAllLeaves = require('../controller/admin/getAllLeaves');
+const leaveStatusUpdate = require('../controller/admin/leaveStatusUpdate');
 
 // Router object
 const router = express.Router();
@@ -104,6 +105,8 @@ router.post('/add-new-user',authMiddleware,addNewUser);
 router.get('/get-users/:role',authMiddleware,getUsers);
 // Get all leave
 router.get('/get-all-leaves',authMiddleware,getAllLeaves);
+// Update leave status
+router.patch('/update-leave-status/:id',authMiddleware,leaveStatusUpdate);
 
 // Routes for mechanic
 // Apply leave
