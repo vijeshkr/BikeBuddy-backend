@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Leave schema
 const leaveSchema = new mongoose.Schema({
     mechanicId: {
         type: mongoose.Schema.Types.ObjectId,

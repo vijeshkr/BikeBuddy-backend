@@ -1,5 +1,5 @@
 const leaveModel = require('../../models/leaveModel');
-const { sendLeaveStatusMail } = require('../../common/utils');
+// const { sendLeaveStatusMail } = require('../../common/utils');
 
 const leaveStatusUpdate = async (req, res) => {
     const leaveId = req.params.id;
@@ -38,12 +38,12 @@ const leaveStatusUpdate = async (req, res) => {
         const updatedLeave = await leave.save();
 
         // Send email
-        await sendLeaveStatusMail(
-            leave.mechanicId.email,
-            status,
-            leave.startDate,
-            leave.endDate
-        );
+        // await sendLeaveStatusMail(
+        //     leave.mechanicId.email,
+        //     status,
+        //     leave.startDate,
+        //     leave.endDate
+        // );
 
         return res.status(200).json({
             message: 'Leave status updated successfully',

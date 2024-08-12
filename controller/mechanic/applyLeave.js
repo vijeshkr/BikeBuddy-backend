@@ -37,7 +37,7 @@ const applyLeave = async (req, res) => {
         // Check if halfDay is false and startDate and endDate are the same day
         if (!halfDay && normalizeDate(start) === normalizeDate(end)) {
             return res.status(400).json({
-                message: 'Date mismatch',
+                message: 'Start date and end date are same',
                 success: false
             });
         }

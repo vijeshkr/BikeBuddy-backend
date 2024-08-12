@@ -8,6 +8,7 @@ const getCustomerVehicles = async (req, res) => {
         // Fetch vehicles for the specific customer id
         const vehicles = await customerVehicleModel.find({ customer: customerId}).populate('modelName');
 
+        // If no vehicles found, respond with 404
         if(vehicles.length === 0) {
             return res.status(404).json({
                 message: 'No vehicles found for this customer',
@@ -15,6 +16,7 @@ const getCustomerVehicles = async (req, res) => {
             });
         }
 
+        // If vehicles are found, respond with 200 and the data
         res.status(200).json({
             message: 'Vehicles fetched successfully',
             success: true,

@@ -38,7 +38,7 @@ const leaveStatusUpdate = require('../controller/admin/leaveStatusUpdate');
 // Router object
 const router = express.Router();
 
-// Common routes
+// --- Common routes ---
 // Email verification
 router.get('/verify-email/:token', verifyEmail);
 // User login
@@ -58,60 +58,53 @@ router.post('/user-password-change', authMiddleware, userPasswordChange);
 // Update profile
 router.put('/update-profile', authMiddleware, updateProfile);
 // Remove profile picture only
-router.patch('/remove-profile-picture',authMiddleware,removeProfilePicture);
+router.patch('/remove-profile-picture', authMiddleware, removeProfilePicture);
 // Get all service packages
-router.get('/get-packages',authMiddleware,getAllServicePackages);
+router.get('/get-packages', authMiddleware, getAllServicePackages);
 // Get all individual works
-router.get('/get-individual-works',authMiddleware,getIndividualWorks);
+router.get('/get-individual-works', authMiddleware, getIndividualWorks);
 // Get all vehicles
-router.get('/get-all-vehicles',authMiddleware,getAllVehicles);
+router.get('/get-all-vehicles', authMiddleware, getAllVehicles);
 // Get all spare
-router.get('/get-all-spare',authMiddleware,getAllSpare);
+router.get('/get-all-spare', authMiddleware, getAllSpare);
 
-// Routes for customer 
+// --- Routes for customer ---
 // User registration
 router.post('/registration', signup);
 // Add vehicle
-router.post('/add-vehicle',authMiddleware,addCustomerVehicle);
+router.post('/add-vehicle', authMiddleware, addCustomerVehicle);
 // Get cutomer vehicles by customer id
-router.get('/get-vehicles/:customerId',authMiddleware,getCustomerVehicles);
+router.get('/get-vehicles/:customerId', authMiddleware, getCustomerVehicles);
 
-// Routes for admin
-// Add service packages
-router.post('/add-package',authMiddleware,addServicePackage);
-// Update service packages
-router.put('/update-package',authMiddleware,updateServicePackage);
-// Delete service packages
-router.delete('/delete-package',authMiddleware,deleteServicePackage);
-// Add individual works
-router.post('/add-individual-work',authMiddleware,addIndividualWork);
-// Update individual work
-router.put('/update-individual-work',authMiddleware,updateIndividualWork);
-// Delete individual work
-router.delete('/delete-individual-work',authMiddleware,deleteIndividualWork);
-// Add new vehicle
-router.post('/add-new-vehicle',authMiddleware,addNewVehicle);
-// Add new spare
-router.post('/add-new-spare',authMiddleware,addNewSpare);
-// Delete spare
-router.delete('/delete-spare/:spareId',authMiddleware,deleteSpare);
-// Update spare
-router.put('/update-spare/:spareId',authMiddleware,updateSpare);
+// --- Routes for admin ---
+// Service packages
+router.post('/add-package', authMiddleware, addServicePackage);
+router.put('/update-package', authMiddleware, updateServicePackage);
+router.delete('/delete-package', authMiddleware, deleteServicePackage);
+// Individual works
+router.post('/add-individual-work', authMiddleware, addIndividualWork);
+router.put('/update-individual-work', authMiddleware, updateIndividualWork);
+router.delete('/delete-individual-work', authMiddleware, deleteIndividualWork);
+// Vehicle
+router.post('/add-new-vehicle', authMiddleware, addNewVehicle);
+// Spare parts
+router.post('/add-new-spare', authMiddleware, addNewSpare);
+router.delete('/delete-spare/:spareId', authMiddleware, deleteSpare);
+router.put('/update-spare/:spareId', authMiddleware, updateSpare);
 // Get all customer vehicles
-router.get('/get-all-customer-vehicles',authMiddleware,getAllCustomerVehicles);
+router.get('/get-all-customer-vehicles', authMiddleware, getAllCustomerVehicles);
 // Add new user
-router.post('/add-new-user',authMiddleware,addNewUser);
+router.post('/add-new-user', authMiddleware, addNewUser);
 // Get users by role
-router.get('/get-users/:role',authMiddleware,getUsers);
-// Get all leave
-router.get('/get-all-leaves',authMiddleware,getAllLeaves);
-// Update leave status
-router.patch('/update-leave-status/:id',authMiddleware,leaveStatusUpdate);
+router.get('/get-users/:role', authMiddleware, getUsers);
+// Leave management
+router.get('/get-all-leaves', authMiddleware, getAllLeaves);
+router.patch('/update-leave-status/:id', authMiddleware, leaveStatusUpdate);
 
-// Routes for mechanic
+// --- Routes for mechanic ---
 // Apply leave
-router.post('/apply-leave',authMiddleware,applyLeave);
+router.post('/apply-leave', authMiddleware, applyLeave);
 // Get mechanic leaves
-router.get('/get-mechanic-leaves',authMiddleware,getMechanicLeaves);
+router.get('/get-mechanic-leaves', authMiddleware, getMechanicLeaves);
 
 module.exports = router;

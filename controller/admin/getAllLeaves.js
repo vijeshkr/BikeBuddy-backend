@@ -14,8 +14,10 @@ const getAllLeaves = async (req, res) => {
             });
         }
 
+        // Fetch all leave records from the database and populate the 'mechanicId' field
         const leaves = await leaveModel.find().populate('mechanicId');
 
+        // If no records are found, respond with a 404
         if (leaves.length === 0) {
             return res.status(404).json({
                 message: 'No leave history available',

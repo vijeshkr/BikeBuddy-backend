@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Spare parts schema
 const sparePartSchema = new mongoose.Schema({
     itemName: {type: String, required: true},
     image: {type: String, required: true},

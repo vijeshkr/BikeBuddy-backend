@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Customer vehicle schema
 const customerVehicleSchema = new mongoose.Schema({
     customer: {
         type: mongoose.Schema.Types.ObjectId,

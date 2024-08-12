@@ -12,8 +12,10 @@ const getAllCustomerVehicles = async (req, res) => {
             });
         }
 
+        // Fetch all vehicles from the database and populate customer details
         const vehicles = await customerVehicleModel.find().populate('customer');
 
+        // Send a successfull response with retrieved data
         res.status(200).json({
             message: 'Vehicles fetched successfully',
             success: true,

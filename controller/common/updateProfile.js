@@ -47,7 +47,10 @@ const updateProfile = async (req, res) => {
 
         await user.save();
 
+        // Prepare the response object without password field
         const {password: password , ...otherData} = user.toObject();
+
+        // Send a successful response with updated user data
         res.status(200).json({
             message: 'Profile updated successfully',
             success: true,

@@ -16,6 +16,7 @@ const deleteServicePackage = async (req, res) => {
         // Find and delete the package by id
         const deletedPackage = await servicePackageModel.findByIdAndDelete(packageId);
 
+        // If no deleted package respond with 404
         if (!deletedPackage) {
             return res.status(404).json({
                 message: 'Package not found',

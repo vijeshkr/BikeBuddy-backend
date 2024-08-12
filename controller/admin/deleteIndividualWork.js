@@ -16,6 +16,7 @@ const deleteIndividualWork = async (req, res) => {
         // Find and delete the work by id
         const deletedWork = await individualWorkModel.findByIdAndDelete(workId);
 
+        // If no deleted work respond with 404
         if (!deletedWork) {
             return res.status(404).json({
                 message: 'Work not found',
