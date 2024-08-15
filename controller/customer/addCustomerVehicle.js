@@ -35,10 +35,14 @@ const addCustomerVehicle = async (req, res) => {
 
         await vehicle.save();
 
+        // Populate the modelName field directly after save
+        const populatedVehicle = await customerVehicleModel.findById(vehicle._id)
+            .populate('modelName')
+
         res.status(200).json({
             message: 'Vehicle created successfully',
             success: true,
-            data: vehicle
+            data: populatedVehicle
         });
 
     } catch (error) {

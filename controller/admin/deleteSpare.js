@@ -1,6 +1,7 @@
 const sparePartModel = require('../../models/sparePartModel');
 const fs = require('fs');
 const path = require('path');
+const { io } = require('../../config/socket');
 
 const deleteSpare = async (req, res) => {
     const spareId = req.params.spareId;
@@ -39,6 +40,9 @@ const deleteSpare = async (req, res) => {
 
         // Find and delete spare by id
         const deletedSpare = await sparePartModel.findByIdAndDelete(spareId);
+
+        // Send new spare to mechanic spare page using socket io
+        io.emit('deletedSpare', spareId);
 
         return res.status(200).json({
             message: 'spare successfully deleted',

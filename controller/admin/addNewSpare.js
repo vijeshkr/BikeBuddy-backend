@@ -1,8 +1,9 @@
 const sparePartModel = require('../../models/sparePartModel');
+const { io } = require('../../config/socket');
 
 const addNewSpare = async (req, res) => {
     const userRole = req.userRole;
-    const {itemName, image, price, stock, suitable} = req.body;
+    const { itemName, image, price, stock, suitable } = req.body;
     try {
         // Checking current user is admin or not
         if (userRole !== 'admin') {
@@ -32,12 +33,15 @@ const addNewSpare = async (req, res) => {
         // Save spare
         const savedSpare = await newSpare.save();
 
+        // Send new spare to mechanic spare page using socket io
+        io.emit('newSpare', savedSpare);
+
         res.status(200).json({
             message: 'New spare created',
             success: true,
             data: savedSpare
         });
-        
+
     } catch (error) {
         res.status(500).json({
             message: 'Internal server error',
