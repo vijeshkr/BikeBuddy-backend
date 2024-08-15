@@ -1,5 +1,6 @@
 const { normalizeDate } = require('../../common/utils');
 const leaveModel = require('../../models/leaveModel');
+const { io } = require('../../config/socket');
 
 const applyLeave = async (req, res) => {
     const userId = req.userId;
@@ -57,6 +58,9 @@ const applyLeave = async (req, res) => {
 
         // Save the leave request
         const savedLeave = await newLeave.save();
+
+        // Send new leave to admin leave page using socket io
+        io.emit('newLeaveRequest',savedLeave);
 
         res.status(201).json({
             message: 'Leave request submitted',
