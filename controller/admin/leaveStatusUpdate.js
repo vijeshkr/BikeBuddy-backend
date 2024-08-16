@@ -1,6 +1,7 @@
 const leaveModel = require('../../models/leaveModel');
 // const { sendLeaveStatusMail } = require('../../common/utils');
 const { io } = require('../../config/socket');
+const notificationModel = require('../../models/notificationModel');
 
 const leaveStatusUpdate = async (req, res) => {
     const leaveId = req.params.id;
@@ -37,6 +38,13 @@ const leaveStatusUpdate = async (req, res) => {
         // Update the status field
         leave.status = status;
         const updatedLeave = await leave.save();
+
+        // Create notification for the mechanic
+        await notificationModel.create({
+            userId: leave.mechanicId._id,
+            message: `Your leave request has been ${status}.`,
+            link:'/mechanic/mechanic-leave'
+        });
 
         // Send updated leave to the mechanic leave history using socket io
         io.emit('leaveStatusUpdate',updatedLeave);

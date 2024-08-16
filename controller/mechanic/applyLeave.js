@@ -1,5 +1,7 @@
 const { normalizeDate } = require('../../common/utils');
 const leaveModel = require('../../models/leaveModel');
+const userModel = require('../../models/userModel');
+const notificationModel = require('../../models/notificationModel');
 const { io } = require('../../config/socket');
 
 const applyLeave = async (req, res) => {
@@ -59,13 +61,28 @@ const applyLeave = async (req, res) => {
         // Save the leave request
         const savedLeave = await newLeave.save();
 
+        // Populate the mechanicId field to get the mechanic's details
+        const leaveWithMechanic = await leaveModel.findById(savedLeave._id).populate('mechanicId');
+
+        // Find all admin
+        const admins = await userModel.find({ role: 'admin' });
+
+        // Create notification for each admin
+        for (const admin of admins) {
+            await notificationModel.create({
+                userId: admin._id,
+                message: `New leave application from mechanic ${leaveWithMechanic.mechanicId.name}.`,
+                link: '/admin/admin-mechanics/leave-requests'
+            });
+        }
+
         // Send new leave to admin leave page using socket io
-        io.emit('newLeaveRequest',savedLeave);
+        io.emit('newLeaveRequest', leaveWithMechanic);
 
         res.status(201).json({
             message: 'Leave request submitted',
             success: true,
-            data: savedLeave
+            data: leaveWithMechanic
         });
 
     } catch (error) {

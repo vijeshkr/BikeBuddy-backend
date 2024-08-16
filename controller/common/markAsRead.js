@@ -5,10 +5,10 @@ const markAsRead = async (req, res) => {
 
     try {
         // Find the notification by it's id
-        const notification = await notificationModel.findById( notificationId );
+        const notification = await notificationModel.findById(notificationId);
 
         // If notification not found, send a 404 response
-        if(!notification){
+        if (!notification) {
             return res.status(404).json({
                 message: 'Notification not found',
                 success: false
