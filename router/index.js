@@ -34,6 +34,9 @@ const addNewUser = require('../controller/admin/addNewUser');
 const getUsers = require('../controller/admin/getUsers');
 const getAllLeaves = require('../controller/admin/getAllLeaves');
 const leaveStatusUpdate = require('../controller/admin/leaveStatusUpdate');
+const getNotifications = require('../controller/common/getNotifications');
+const markAsRead = require('../controller/common/markAsRead');
+const markAllAsRead = require('../controller/common/markAllAsRead');
 
 // Router object
 const router = express.Router();
@@ -67,6 +70,10 @@ router.get('/get-individual-works', authMiddleware, getIndividualWorks);
 router.get('/get-all-vehicles', authMiddleware, getAllVehicles);
 // Get all spare
 router.get('/get-all-spare', authMiddleware, getAllSpare);
+// Notifications
+router.get('/get-notifications',authMiddleware,getNotifications);
+router.patch('/mark-as-read/:notificationId',authMiddleware,markAsRead);
+router.patch('/mark-all-as-read',authMiddleware,markAllAsRead);
 
 // --- Routes for customer ---
 // User registration
