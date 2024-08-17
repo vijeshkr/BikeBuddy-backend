@@ -2,6 +2,7 @@ const leaveModel = require('../../models/leaveModel');
 // const { sendLeaveStatusMail } = require('../../common/utils');
 const { io } = require('../../config/socket');
 const notificationModel = require('../../models/notificationModel');
+const { getSocketIdByUserId } = require('../../config/socket');
 
 const leaveStatusUpdate = async (req, res) => {
     const leaveId = req.params.id;
@@ -10,7 +11,7 @@ const leaveStatusUpdate = async (req, res) => {
 
     try {
         // Check if the user is an admin
-        if(userRole !== 'admin'){
+        if (userRole !== 'admin') {
             return res.status(403).json({
                 message: 'Only admin can update the leave status',
                 success: false
@@ -19,7 +20,7 @@ const leaveStatusUpdate = async (req, res) => {
 
         // Validate the status value
         const validateStatus = ['Approved', 'Rejected'];
-        if(!validateStatus.includes(status)){
+        if (!validateStatus.includes(status)) {
             return res.status(403).json({
                 message: 'Invalid status value',
                 success: false
@@ -28,7 +29,7 @@ const leaveStatusUpdate = async (req, res) => {
 
         // Find and update the leave request
         const leave = await leaveModel.findById(leaveId).populate('mechanicId');
-        if(!leave){
+        if (!leave) {
             return res.status(404).json({
                 message: 'Leave request not found',
                 success: false
@@ -40,14 +41,22 @@ const leaveStatusUpdate = async (req, res) => {
         const updatedLeave = await leave.save();
 
         // Create notification for the mechanic
-        await notificationModel.create({
+        const notification = await notificationModel.create({
             userId: leave.mechanicId._id,
             message: `Your leave request has been ${status}.`,
-            link:'/mechanic/mechanic-leave'
+            link: '/mechanic/mechanic-leave'
         });
 
-        // Send updated leave to the mechanic leave history using socket io
-        io.emit('leaveStatusUpdate',updatedLeave);
+        const socketId = getSocketIdByUserId(leave.mechanicId._id.toString());
+
+        console.log(leave.mechanicId._id)
+
+        if (socketId) {
+            // Send new leave notification to mechanic
+            io.to(socketId).emit('newNotification', notification);
+            // Send updated leave to the mechanic leave history using socket io
+            io.to(socketId).emit('leaveStatusUpdate', updatedLeave);
+        }
 
         // Send email
         // await sendLeaveStatusMail(

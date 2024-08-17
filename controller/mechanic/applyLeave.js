@@ -3,6 +3,7 @@ const leaveModel = require('../../models/leaveModel');
 const userModel = require('../../models/userModel');
 const notificationModel = require('../../models/notificationModel');
 const { io } = require('../../config/socket');
+const { getSocketIdByUserId } = require('../../config/socket');
 
 const applyLeave = async (req, res) => {
     const userId = req.userId;
@@ -69,15 +70,20 @@ const applyLeave = async (req, res) => {
 
         // Create notification for each admin
         for (const admin of admins) {
-            await notificationModel.create({
+            const notification = await notificationModel.create({
                 userId: admin._id,
                 message: `New leave application from mechanic ${leaveWithMechanic.mechanicId.name}.`,
                 link: '/admin/admin-mechanics/leave-requests'
             });
-        }
+            const socketId = getSocketIdByUserId(admin._id.toString());
+            if (socketId) {
+                // Send new leave notification to admin
+                io.to(socketId).emit('newNotification', notification);
+                // Send new leave to admin leave page using socket io
+                io.to(socketId).emit('newLeaveRequest', leaveWithMechanic);
+            }
 
-        // Send new leave to admin leave page using socket io
-        io.emit('newLeaveRequest', leaveWithMechanic);
+        }
 
         res.status(201).json({
             message: 'Leave request submitted',
