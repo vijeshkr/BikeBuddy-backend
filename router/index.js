@@ -39,6 +39,7 @@ const markAsRead = require('../controller/common/markAsRead');
 const markAllAsRead = require('../controller/common/markAllAsRead');
 const addNewBooking = require('../controller/common/addNewBooking');
 const getCurrentBooking = require('../controller/customer/getCurrentBooking');
+const cancelBooking = require('../controller/customer/cancelBooking');
 
 // Router object
 const router = express.Router();
@@ -88,6 +89,8 @@ router.post('/add-vehicle', authMiddleware, addCustomerVehicle);
 router.get('/get-vehicles/:customerId', authMiddleware, getCustomerVehicles);
 // Get current booking
 router.get('/get-current-booking/:customerId',authMiddleware,getCurrentBooking);
+// Cancel booking
+router.patch('/cancel-booking/:bookingId',authMiddleware,cancelBooking);
 
 // --- Routes for admin ---
 // Service packages
