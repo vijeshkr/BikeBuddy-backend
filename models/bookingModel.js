@@ -7,7 +7,7 @@ const bookingSchema = new mongoose.Schema({
         ref: 'user',
         required: true,
     },
-    vehicleName: {
+    vehicleId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'customerVehicle',
         required: true,
@@ -31,8 +31,8 @@ const bookingSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Approved', 'In Progress', 'Completed', 'Cancelled'],
-        default: 'Pending'
+        enum: ['Pending', 'Approved', 'In Progress', 'Completed', 'Cancelled','Unallocated'],
+        default: 'Unallocated'
     },
 }, {
     timestamps: true

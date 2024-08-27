@@ -1,11 +1,11 @@
 const bookingModel = require('../../models/bookingModel');
 
 const addNewBooking = async (req, res) => {
-    const { customerId, vehicleName, bookingDate, serviceType, pickUp, description } = req.body;
+    const { customerId, vehicleId, bookingDate, serviceType, pickUp, description } = req.body;
 
     try {
         // Validate that all required fields are present
-        if(!customerId || !vehicleName || !bookingDate || !serviceType){
+        if(!customerId || !vehicleId || !bookingDate || !serviceType){
             return res.status(400).json({
                 message: 'All required fields must be filled',
                 success: false
@@ -15,7 +15,7 @@ const addNewBooking = async (req, res) => {
         // Create a new booking document
         const newBooking = new bookingModel({
             customerId,
-            vehicleName,
+            vehicleId,
             bookingDate,
             serviceType,
             pickUp,
@@ -25,11 +25,15 @@ const addNewBooking = async (req, res) => {
         // Save the booking
         await newBooking.save();
 
+        const bookingData = await bookingModel.findById(newBooking._id)
+            .populate('vehicleId')
+            .populate('serviceType');
+
         // Respond with success message and booking data
         res.status(200).json({
             message: 'Booking created successfully',
             success: true,
-            data: newBooking
+            data: bookingData
         });
         
     } catch (error) {

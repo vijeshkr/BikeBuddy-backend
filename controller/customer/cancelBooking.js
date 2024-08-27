@@ -16,7 +16,7 @@ const cancelBooking = async (req, res) => {
         }
 
         // Check if the booking is eligible for cancellation (status must be "Pending")
-        if(booking.status !== 'Pending'){
+        if(booking.status !== 'Unallocated'){
             return res.status(400).json({
                 message: 'Cannot cancel booking',
                 success: false
