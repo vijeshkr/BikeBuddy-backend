@@ -37,6 +37,7 @@ const leaveStatusUpdate = require('../controller/admin/leaveStatusUpdate');
 const getNotifications = require('../controller/common/getNotifications');
 const markAsRead = require('../controller/common/markAsRead');
 const markAllAsRead = require('../controller/common/markAllAsRead');
+const addNewBooking = require('../controller/common/addNewBooking');
 
 // Router object
 const router = express.Router();
@@ -74,6 +75,8 @@ router.get('/get-all-spare', authMiddleware, getAllSpare);
 router.get('/get-notifications',authMiddleware,getNotifications);
 router.patch('/mark-as-read/:notificationId',authMiddleware,markAsRead);
 router.patch('/mark-all-as-read',authMiddleware,markAllAsRead);
+// New booking
+router.post('/add-new-booking',authMiddleware,addNewBooking);
 
 // --- Routes for customer ---
 // User registration
