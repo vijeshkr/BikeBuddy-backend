@@ -40,6 +40,8 @@ const markAllAsRead = require('../controller/common/markAllAsRead');
 const addNewBooking = require('../controller/common/addNewBooking');
 const getCurrentBooking = require('../controller/customer/getCurrentBooking');
 const cancelBooking = require('../controller/customer/cancelBooking');
+const getAllBookings = require('../controller/admin/getAllBookings');
+const allocateWork = require('../controller/admin/allocateWork');
 
 // Router object
 const router = express.Router();
@@ -116,6 +118,10 @@ router.get('/get-users/:role', authMiddleware, getUsers);
 // Leave management
 router.get('/get-all-leaves', authMiddleware, getAllLeaves);
 router.patch('/update-leave-status/:id', authMiddleware, leaveStatusUpdate);
+// Get all booking
+router.get('/get-all-booking',authMiddleware,getAllBookings);
+// Work allocation
+router.post('/allocate-work',authMiddleware,allocateWork);
 
 // --- Routes for mechanic ---
 // Apply leave
