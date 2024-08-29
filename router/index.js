@@ -42,6 +42,7 @@ const getCurrentBooking = require('../controller/customer/getCurrentBooking');
 const cancelBooking = require('../controller/customer/cancelBooking');
 const getAllBookings = require('../controller/admin/getAllBookings');
 const allocateWork = require('../controller/admin/allocateWork');
+const addNewBreakdown = require('../controller/common/addNewBreakdown');
 
 // Router object
 const router = express.Router();
@@ -81,6 +82,8 @@ router.patch('/mark-as-read/:notificationId',authMiddleware,markAsRead);
 router.patch('/mark-all-as-read',authMiddleware,markAllAsRead);
 // New booking
 router.post('/add-new-booking',authMiddleware,addNewBooking);
+// New breakdown
+router.post('/add-new-breakdown',authMiddleware,addNewBreakdown);
 
 // --- Routes for customer ---
 // User registration

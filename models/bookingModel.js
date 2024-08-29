@@ -19,7 +19,7 @@ const bookingSchema = new mongoose.Schema({
     serviceType: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'servicePackage',
-        required: true
+        required: false
     },
     pickUp: {
         type: Boolean,
@@ -31,13 +31,24 @@ const bookingSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Allocated', 'In Progress', 'Completed', 'Cancelled','Unallocated'],
+        enum: ['Pending', 'Allocated', 'In Progress', 'Completed', 'Cancelled', 'Unallocated'],
         default: 'Unallocated'
     },
     allocation: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'allocation'
-    }
+    },
+    breakdown: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
+    place: {
+        type: String
+    },
+    phone: {
+        type: String
+    },
 }, {
     timestamps: true
 });

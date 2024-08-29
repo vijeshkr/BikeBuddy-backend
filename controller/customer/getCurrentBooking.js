@@ -8,7 +8,7 @@ const getCurrentBooking = async (req, res) => {
         const bookings = await bookingModel.find({
             customerId,
             status: { $nin: ['Completed', 'Cancelled'] }
-        }).populate('vehicleId serviceType').sort({ bookingDate: -1 });
+        }).populate('vehicleId serviceType').sort({ createdAt: -1 });
 
         // Respond with the current bookings
         res.status(200).json({
