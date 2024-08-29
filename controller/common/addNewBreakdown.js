@@ -5,7 +5,7 @@ const addNewBreakdown = async (req, res) => {
 
     try {
         // Validate that all required fields are present
-        if(!customerId || !vehicleId || !bookingDate || !phone || !place){
+        if (!customerId || !vehicleId || !bookingDate || !phone || !place) {
             return res.status(400).json({
                 message: 'All required fields must be filled',
                 success: false
@@ -27,6 +27,10 @@ const addNewBreakdown = async (req, res) => {
         await newBooking.save();
 
         const bookingData = await bookingModel.findById(newBooking._id)
+            .populate({
+                path: 'customerId',
+                select: '-password'
+            })
             .populate('vehicleId')
             .populate('serviceType');
 
@@ -36,7 +40,7 @@ const addNewBreakdown = async (req, res) => {
             success: true,
             data: bookingData
         });
-        
+
     } catch (error) {
         console.error('Error while service booking', error);
         res.status(500).json({
