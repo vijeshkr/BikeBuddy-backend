@@ -21,7 +21,7 @@ const getAllBookings = async (req, res) => {
                 { path: 'customerId', select: '-password' }, // Exclude password from customerId
                 { path: 'allocation' }
             ])
-            .sort({ bookingDate: -1 });
+            .sort({ createdAt: -1 });
 
         // Populate mechanicId within allocation
         await bookingModel.populate(bookings, {

@@ -27,15 +27,29 @@ const allocateWork = async (req, res) => {
         // Update booking status to 'Allocated' and set the allocation reference
         await bookingModel.findByIdAndUpdate(bookingId, {
             status: 'Allocated',
-            // Update the allocation field with the new allocation ID
             allocation: savedAllocation._id
         });
 
-        // Respond with success message
+        // Fetch the updated booking and populate fields
+        const updatedBooking = await bookingModel.findById(bookingId)
+            .populate([
+                { path: 'vehicleId' },
+                { path: 'serviceType' },
+                { path: 'customerId', select: '-password' }, // Exclude password from customerId
+                { path: 'allocation' }
+            ]);
+
+        // Populate mechanicId within the allocation field
+        await bookingModel.populate(updatedBooking, {
+            path: 'allocation.mechanicId',
+            select: '-password' // Exclude password from mechanicId if needed
+        });
+
+        // Respond with success message and populated booking
         res.status(200).json({
             message: 'Work allocated successfully',
             success: true,
-            data: savedAllocation
+            data: updatedBooking
         });
 
     } catch (error) {
