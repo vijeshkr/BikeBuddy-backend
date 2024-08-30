@@ -43,6 +43,7 @@ const cancelBooking = require('../controller/customer/cancelBooking');
 const getAllBookings = require('../controller/admin/getAllBookings');
 const allocateWork = require('../controller/admin/allocateWork');
 const addNewBreakdown = require('../controller/common/addNewBreakdown');
+const getAllocationsByMechanic = require('../controller/mechanic/getAllocationsByMechanic');
 
 // Router object
 const router = express.Router();
@@ -131,5 +132,7 @@ router.post('/allocate-work',authMiddleware,allocateWork);
 router.post('/apply-leave', authMiddleware, applyLeave);
 // Get mechanic leaves
 router.get('/get-mechanic-leaves', authMiddleware, getMechanicLeaves);
+// Get allocations by mechanic ID
+router.get('/get-allocations/:mechanicId',authMiddleware,getAllocationsByMechanic);
 
 module.exports = router;
