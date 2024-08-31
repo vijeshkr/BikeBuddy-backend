@@ -47,6 +47,7 @@ const getAllocationsByMechanic = require('../controller/mechanic/getAllocationsB
 const statusUpdate = require('../controller/mechanic/statusUpdate');
 const requestExtraWork = require('../controller/mechanic/requsetExtraWork');
 const completeWork = require('../controller/mechanic/completeWork');
+const updateCustomerApproval = require('../controller/customer/updateCustomerApproval');
 
 // Router object
 const router = express.Router();
@@ -100,6 +101,8 @@ router.get('/get-vehicles/:customerId', authMiddleware, getCustomerVehicles);
 router.get('/get-current-booking/:customerId',authMiddleware,getCurrentBooking);
 // Cancel booking
 router.patch('/cancel-booking/:bookingId',authMiddleware,cancelBooking);
+// Update customer approval field in the allocation
+router.patch('/update-customer-approval/:id',authMiddleware,updateCustomerApproval);
 
 // --- Routes for admin ---
 // Service packages

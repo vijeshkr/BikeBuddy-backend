@@ -31,7 +31,7 @@ const bookingSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Allocated', 'Progress', 'Completed', 'Cancelled', 'Unallocated'],
+        enum: ['Pending', 'Allocated', 'Progress', 'Completed', 'Cancelled', 'Unallocated','Paid'],
         default: 'Unallocated'
     },
     allocation: {
