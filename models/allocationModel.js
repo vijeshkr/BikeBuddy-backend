@@ -11,6 +11,15 @@ const allocationSchema = mongoose.Schema({
         ref: 'user',
         required: true,
     },
+    extraWorkDescription: {
+        type: String,
+    },
+    extraWorkEstimationAmount: {
+        type: Number,
+    },
+    customerApproval: {
+        type: String,
+    },
 }, {
     timestamps: true
 });

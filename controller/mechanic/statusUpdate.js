@@ -4,6 +4,15 @@ const statusUpdate = async (req, res) => {
     const { bookingId, status } = req.body;
 
     try {
+
+        // Check if the status available or not
+        if(!status){
+            return res.status(422).json({
+                message: 'Please select one option',
+                success: false
+            });
+        }
+
         // Find the booking by id
         const booking = await bookingModel.findById(bookingId);
 
