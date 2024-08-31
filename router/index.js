@@ -44,6 +44,7 @@ const getAllBookings = require('../controller/admin/getAllBookings');
 const allocateWork = require('../controller/admin/allocateWork');
 const addNewBreakdown = require('../controller/common/addNewBreakdown');
 const getAllocationsByMechanic = require('../controller/mechanic/getAllocationsByMechanic');
+const statusUpdate = require('../controller/mechanic/statusUpdate');
 
 // Router object
 const router = express.Router();
@@ -134,5 +135,7 @@ router.post('/apply-leave', authMiddleware, applyLeave);
 router.get('/get-mechanic-leaves', authMiddleware, getMechanicLeaves);
 // Get allocations by mechanic ID
 router.get('/get-allocations/:mechanicId',authMiddleware,getAllocationsByMechanic);
+// Update booking status
+router.patch('/update-status',authMiddleware,statusUpdate);
 
 module.exports = router;
