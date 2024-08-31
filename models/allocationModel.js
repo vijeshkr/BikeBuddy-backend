@@ -20,6 +20,29 @@ const allocationSchema = mongoose.Schema({
     customerApproval: {
         type: String,
     },
+    partsUsed: [
+        {
+            partId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'sparePart',
+                required: true,
+            },
+            quantity: {
+                type: Number,
+                required: true,
+            },
+            totalPartCost: {
+                type: Number, // price * quantity
+                required: true,
+            }
+        }
+    ],
+    serviceAdvice: {
+        type: String,
+    },
+    totalPartsPrice: {
+        type: Number, // Total cost (sum of all parts costs)
+    },
 }, {
     timestamps: true
 });
