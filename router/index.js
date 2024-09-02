@@ -49,6 +49,7 @@ const requestExtraWork = require('../controller/mechanic/requsetExtraWork');
 const completeWork = require('../controller/mechanic/completeWork');
 const updateCustomerApproval = require('../controller/customer/updateCustomerApproval');
 const getAllocationById = require('../controller/admin/getAllocationById');
+const addServiceHistory = require('../controller/admin/addServiceHistory');
 
 // Router object
 const router = express.Router();
@@ -135,6 +136,8 @@ router.get('/get-all-booking', authMiddleware, getAllBookings);
 router.post('/allocate-work', authMiddleware, allocateWork);
 // Get allocation by ID
 router.get('/get-allocation-by/:allocationId',authMiddleware, getAllocationById);
+// Add new service history
+router.post('/add-service-history',authMiddleware,addServiceHistory);
 
 // --- Routes for mechanic ---
 // Apply leave
