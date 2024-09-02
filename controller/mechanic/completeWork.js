@@ -28,6 +28,7 @@ const completeWork = async (req, res) => {
 
             return {
                 partId: part.partId,
+                partName: part.partName,
                 quantity: part.quantity,
                 totalPartCost,
             };

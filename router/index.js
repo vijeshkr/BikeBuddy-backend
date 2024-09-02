@@ -48,6 +48,7 @@ const statusUpdate = require('../controller/mechanic/statusUpdate');
 const requestExtraWork = require('../controller/mechanic/requsetExtraWork');
 const completeWork = require('../controller/mechanic/completeWork');
 const updateCustomerApproval = require('../controller/customer/updateCustomerApproval');
+const getAllocationById = require('../controller/admin/getAllocationById');
 
 // Router object
 const router = express.Router();
@@ -82,13 +83,13 @@ router.get('/get-all-vehicles', authMiddleware, getAllVehicles);
 // Get all spare
 router.get('/get-all-spare', authMiddleware, getAllSpare);
 // Notifications
-router.get('/get-notifications',authMiddleware,getNotifications);
-router.patch('/mark-as-read/:notificationId',authMiddleware,markAsRead);
-router.patch('/mark-all-as-read',authMiddleware,markAllAsRead);
+router.get('/get-notifications', authMiddleware, getNotifications);
+router.patch('/mark-as-read/:notificationId', authMiddleware, markAsRead);
+router.patch('/mark-all-as-read', authMiddleware, markAllAsRead);
 // New booking
-router.post('/add-new-booking',authMiddleware,addNewBooking);
+router.post('/add-new-booking', authMiddleware, addNewBooking);
 // New breakdown
-router.post('/add-new-breakdown',authMiddleware,addNewBreakdown);
+router.post('/add-new-breakdown', authMiddleware, addNewBreakdown);
 
 // --- Routes for customer ---
 // User registration
@@ -98,11 +99,11 @@ router.post('/add-vehicle', authMiddleware, addCustomerVehicle);
 // Get cutomer vehicles by customer id
 router.get('/get-vehicles/:customerId', authMiddleware, getCustomerVehicles);
 // Get current booking
-router.get('/get-current-booking/:customerId',authMiddleware,getCurrentBooking);
+router.get('/get-current-booking/:customerId', authMiddleware, getCurrentBooking);
 // Cancel booking
-router.patch('/cancel-booking/:bookingId',authMiddleware,cancelBooking);
+router.patch('/cancel-booking/:bookingId', authMiddleware, cancelBooking);
 // Update customer approval field in the allocation
-router.patch('/update-customer-approval/:id',authMiddleware,updateCustomerApproval);
+router.patch('/update-customer-approval/:id', authMiddleware, updateCustomerApproval);
 
 // --- Routes for admin ---
 // Service packages
@@ -129,9 +130,11 @@ router.get('/get-users/:role', authMiddleware, getUsers);
 router.get('/get-all-leaves', authMiddleware, getAllLeaves);
 router.patch('/update-leave-status/:id', authMiddleware, leaveStatusUpdate);
 // Get all booking
-router.get('/get-all-booking',authMiddleware,getAllBookings);
+router.get('/get-all-booking', authMiddleware, getAllBookings);
 // Work allocation
-router.post('/allocate-work',authMiddleware,allocateWork);
+router.post('/allocate-work', authMiddleware, allocateWork);
+// Get allocation by ID
+router.get('/get-allocation-by/:allocationId',authMiddleware, getAllocationById);
 
 // --- Routes for mechanic ---
 // Apply leave
@@ -139,12 +142,12 @@ router.post('/apply-leave', authMiddleware, applyLeave);
 // Get mechanic leaves
 router.get('/get-mechanic-leaves', authMiddleware, getMechanicLeaves);
 // Get allocations by mechanic ID
-router.get('/get-allocations/:mechanicId',authMiddleware,getAllocationsByMechanic);
+router.get('/get-allocations/:mechanicId', authMiddleware, getAllocationsByMechanic);
 // Update booking status
-router.patch('/update-status',authMiddleware,statusUpdate);
+router.patch('/update-status', authMiddleware, statusUpdate);
 // Request extra work
-router.patch('/request-work/:id',authMiddleware,requestExtraWork);
+router.patch('/request-work/:id', authMiddleware, requestExtraWork);
 // Update work completion
-router.put('/work-completion/:id',authMiddleware,completeWork);
+router.put('/work-completion/:id', authMiddleware, completeWork);
 
 module.exports = router;

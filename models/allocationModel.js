@@ -27,6 +27,10 @@ const allocationSchema = mongoose.Schema({
                 ref: 'sparePart',
                 required: true,
             },
+            partName: {
+                type: String,
+                required: true,
+            },
             quantity: {
                 type: Number,
                 required: true,
