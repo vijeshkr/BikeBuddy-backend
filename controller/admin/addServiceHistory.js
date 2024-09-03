@@ -1,6 +1,5 @@
 const allocationModel = require('../../models/allocationModel');
-const bookingModel = require('../../models/bookingModel');
-const serviceHistoryModel = require('../../models/serviceHistory');
+const serviceHistoryModel = require('../../models/serviceHistoryModel');
 
 const addServiceHistory = async (req, res) => {
 

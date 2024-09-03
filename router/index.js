@@ -50,6 +50,7 @@ const completeWork = require('../controller/mechanic/completeWork');
 const updateCustomerApproval = require('../controller/customer/updateCustomerApproval');
 const getAllocationById = require('../controller/admin/getAllocationById');
 const addServiceHistory = require('../controller/admin/addServiceHistory');
+const getServiceHistoryByAllocation = require('../controller/customer/getServiceHistoryByAllocation');
 
 // Router object
 const router = express.Router();
@@ -105,6 +106,8 @@ router.get('/get-current-booking/:customerId', authMiddleware, getCurrentBooking
 router.patch('/cancel-booking/:bookingId', authMiddleware, cancelBooking);
 // Update customer approval field in the allocation
 router.patch('/update-customer-approval/:id', authMiddleware, updateCustomerApproval);
+// Get service history by allocation
+router.get('/get-service-history-by-allocation/:allocationId',authMiddleware,getServiceHistoryByAllocation);
 
 // --- Routes for admin ---
 // Service packages
