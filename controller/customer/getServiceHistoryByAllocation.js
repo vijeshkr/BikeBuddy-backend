@@ -5,7 +5,7 @@ const getServiceHistoryByAllocation = async (req, res) => {
     const { allocationId } = req.params;
 
     try {
-        // Find the service history that matches thr provided allocation ID
+        // Find the service history that matches the provided allocation ID
         const serviceHistory = await serviceHistoryModel
             .findOne({ allocation: allocationId })
             .populate({

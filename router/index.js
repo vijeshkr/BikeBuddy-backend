@@ -51,6 +51,7 @@ const updateCustomerApproval = require('../controller/customer/updateCustomerApp
 const getAllocationById = require('../controller/admin/getAllocationById');
 const addServiceHistory = require('../controller/admin/addServiceHistory');
 const getServiceHistoryByAllocation = require('../controller/customer/getServiceHistoryByAllocation');
+const getAllServiceHistory = require('../controller/common/getAllServiceHistory');
 
 // Router object
 const router = express.Router();
@@ -92,6 +93,8 @@ router.patch('/mark-all-as-read', authMiddleware, markAllAsRead);
 router.post('/add-new-booking', authMiddleware, addNewBooking);
 // New breakdown
 router.post('/add-new-breakdown', authMiddleware, addNewBreakdown);
+// Get all service history
+router.get('/get-all-service-history',authMiddleware,getAllServiceHistory);
 
 // --- Routes for customer ---
 // User registration
