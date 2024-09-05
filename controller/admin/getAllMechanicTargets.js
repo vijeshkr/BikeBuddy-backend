@@ -15,7 +15,7 @@ const getAllMechanicTargets = async (req, res) => {
         }
         // Build the filter based on the presence of month and year
         let filter = {};
-        
+
         if (month && year) {
             // If both month and year provided, match the exact 'YYYY-MM' format
             const targetMonth = `${year}-${month.padStart(2, 0)}`;
@@ -39,7 +39,10 @@ const getAllMechanicTargets = async (req, res) => {
         }
 
         // Find mechanic targets based on the filter
-        const mechanicTargets = await mechanicTargetsModel.find(filter).populate('mechanicId');
+        const mechanicTargets = await mechanicTargetsModel.find(filter).populate({
+            path: 'mechanicId',
+            select: '-password'
+        });
 
         res.status(200).json({
             message: 'Mechanic targets data',
