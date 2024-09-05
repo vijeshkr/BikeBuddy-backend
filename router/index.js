@@ -53,6 +53,7 @@ const addServiceHistory = require('../controller/admin/addServiceHistory');
 const getServiceHistoryByAllocation = require('../controller/customer/getServiceHistoryByAllocation');
 const getAllServiceHistory = require('../controller/common/getAllServiceHistory');
 const addNewMechanicTarget = require('../controller/admin/addNewMechanicTargets');
+const getAllMechanicTargets = require('../controller/admin/getAllMechanicTargets');
 
 // Router object
 const router = express.Router();
@@ -147,6 +148,8 @@ router.get('/get-allocation-by/:allocationId',authMiddleware, getAllocationById)
 router.post('/add-service-history',authMiddleware,addServiceHistory);
 // Add new mechanic targets
 router.post('/add-new-mechanic-targets',authMiddleware,addNewMechanicTarget);
+// Get all mechanic targets
+router.get('/get-all-mechanic-targets',authMiddleware,getAllMechanicTargets);
 
 // --- Routes for mechanic ---
 // Apply leave
