@@ -55,6 +55,7 @@ const getAllServiceHistory = require('../controller/common/getAllServiceHistory'
 const addNewMechanicTarget = require('../controller/admin/addNewMechanicTargets');
 const getAllMechanicTargets = require('../controller/admin/getAllMechanicTargets');
 const updateMechanicTarget = require('../controller/admin/updateMechanicTarget');
+const getMechanicTargetByMechanicId = require('../controller/mechanic/getMechanicTargetByMechanicId');
 
 // Router object
 const router = express.Router();
@@ -167,5 +168,7 @@ router.patch('/update-status', authMiddleware, statusUpdate);
 router.patch('/request-work/:id', authMiddleware, requestExtraWork);
 // Update work completion
 router.put('/work-completion/:id', authMiddleware, completeWork);
+// Get mechanic targets by mechanic ID
+router.get('/get-mechanic-target/:mechanicId',authMiddleware,getMechanicTargetByMechanicId);
 
 module.exports = router;
