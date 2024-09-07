@@ -1,5 +1,6 @@
 const allocationModel = require('../../models/allocationModel');
 const bookingModel = require('../../models/bookingModel');
+const sparePartModel = require('../../models/sparePartModel');
 
 const completeWork = async (req, res) => {
     const { partsUsed, serviceAdvice } = req.body;
@@ -12,6 +13,23 @@ const completeWork = async (req, res) => {
                 message: 'Allocation not found',
                 success: false,
             });
+        }
+
+        // Stock updation
+        // Loop through each part and reduce the stock
+        for (const part of partsUsed) {
+            const sparePart = await sparePartModel.findById(part.partId);
+
+            // If part exists and stock is sufficient
+            if (sparePart && sparePart.stock >= part.quantity) {
+                sparePart.stock -= part.quantity; // Decrease the stock
+                await sparePart.save(); // Save the updated part
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    message: `Insufficient stock for part: ${sparePart.itemName}`
+                });
+            }
         }
 
         // Fetch booking id from the allocation
