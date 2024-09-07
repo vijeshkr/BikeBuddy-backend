@@ -56,6 +56,8 @@ const addNewMechanicTarget = require('../controller/admin/addNewMechanicTargets'
 const getAllMechanicTargets = require('../controller/admin/getAllMechanicTargets');
 const updateMechanicTarget = require('../controller/admin/updateMechanicTarget');
 const getMechanicTargetByMechanicId = require('../controller/mechanic/getMechanicTargetByMechanicId');
+const getUserCount = require('../controller/admin/getUserCount');
+const getAllCustomerVehiclesCount = require('../controller/admin/getAllCustomerVehiclesCount');
 
 // Router object
 const router = express.Router();
@@ -154,6 +156,10 @@ router.post('/add-new-mechanic-targets',authMiddleware,addNewMechanicTarget);
 router.get('/get-all-mechanic-targets',authMiddleware,getAllMechanicTargets);
 // Update mechanic target
 router.put('/update-mechanic-target/:mechanicId',authMiddleware,updateMechanicTarget);
+// Get user count
+router.get('/get-user-count/:role',authMiddleware,getUserCount);
+// Get all customer vehicles count
+router.get('/all-customer-vehicles-count',authMiddleware,getAllCustomerVehiclesCount);
 
 // --- Routes for mechanic ---
 // Apply leave
