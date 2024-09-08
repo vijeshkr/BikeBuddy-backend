@@ -1,5 +1,7 @@
+const { getSocketIdByUserId, io } = require('../../config/socket');
 const allocationModel = require('../../models/allocationModel');
 const bookingModel = require('../../models/bookingModel');
+const notificationModel = require('../../models/notificationModel');
 
 const allocateWork = async (req, res) => {
     const userRole = req.userRole;
@@ -44,6 +46,22 @@ const allocateWork = async (req, res) => {
             path: 'allocation.mechanicId',
             select: '-password' // Exclude password from mechanicId if needed
         });
+
+        // Create notification for the mechanic
+        const notification = await notificationModel.create({
+            userId: mechanicId,
+            message: `A new job has been assigned to you.`,
+            link: '/mechanic'
+        });
+
+        const socketId = getSocketIdByUserId(mechanicId.toString());
+
+        if (socketId) {
+            // Send new allocation notification to mechanic
+            io.to(socketId).emit('newNotification', notification);
+            // TODO: Send real time allocation updates to the allocated mechanic like this
+            // io.to(socketId).emit('leaveStatusUpdate', updatedLeave);
+        }
 
         // Respond with success message and populated booking
         res.status(200).json({

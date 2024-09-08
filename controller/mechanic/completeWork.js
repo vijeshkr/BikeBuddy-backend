@@ -1,13 +1,20 @@
+const { getSocketIdByUserId, io } = require('../../config/socket');
 const allocationModel = require('../../models/allocationModel');
 const bookingModel = require('../../models/bookingModel');
+const notificationModel = require('../../models/notificationModel');
 const sparePartModel = require('../../models/sparePartModel');
+const userModel = require('../../models/userModel');
 
 const completeWork = async (req, res) => {
     const { partsUsed, serviceAdvice } = req.body;
     const { id } = req.params;
     try {
         // Find the allocation by ID
-        const allocation = await allocationModel.findById(id);
+        const allocation = await allocationModel.findById(id).populate({
+            path: 'mechanicId',
+            select: '-password'
+        });
+
         if (!allocation) {
             return res.status(404).json({
                 message: 'Allocation not found',
@@ -74,6 +81,26 @@ const completeWork = async (req, res) => {
         // Update the booking status
         booking.status = 'Completed';
         await booking.save();
+
+        // Find all admin
+        const admins = await userModel.find({ role: 'admin' });
+
+        // Create notification for each admin
+        for (const admin of admins) {
+            const notification = await notificationModel.create({
+                userId: admin._id,
+                message: `${allocation?.mechanicId?.name} has completed the assigned job.`,
+                link: '/admin/admin-booking'
+            });
+            const socketId = getSocketIdByUserId(admin._id.toString());
+            if (socketId) {
+                // Send new work completion notification to admin
+                io.to(socketId).emit('newNotification', notification);
+                // TODO: Send real time work completion updates to admin like this
+                // io.to(socketId).emit('newLeaveRequest', leaveWithMechanic);
+            }
+
+        }
 
         // Send a successful response with the updated allocation data
         return res.status(200).json({

@@ -1,4 +1,6 @@
+const { getSocketIdByUserId, io } = require('../../config/socket');
 const allocationModel = require('../../models/allocationModel');
+const notificationModel = require('../../models/notificationModel');
 const serviceHistoryModel = require('../../models/serviceHistoryModel');
 
 const addServiceHistory = async (req, res) => {
@@ -59,6 +61,22 @@ const addServiceHistory = async (req, res) => {
             await booking.bookingId.save(); // Ensure to save the bookingId document
         }
 
+        // Create notification for the customer
+        const notification = await notificationModel.create({
+            userId: booking?.bookingId?.customerId,
+            message: `Work on your vehicle is done. Please check your bill.`,
+            link: '/'
+        });
+
+        const socketId = getSocketIdByUserId(booking?.bookingId?.customerId.toString());
+
+        if (socketId) {
+            // Send new work completion and bill generated notification to customer
+            io.to(socketId).emit('newNotification', notification);
+            // TODO: Send real time work completion updates to customer like this
+            // io.to(socketId).emit('leaveStatusUpdate', updatedLeave);
+        }
+
         // Send response with success message and the created service history
         res.status(200).json({
             message: 'Service history created',
@@ -67,7 +85,7 @@ const addServiceHistory = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-            message: 'Error during registration',
+            message: 'Error during generate bill',
             success: false
         });
     }

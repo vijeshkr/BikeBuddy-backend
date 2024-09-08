@@ -49,8 +49,6 @@ const leaveStatusUpdate = async (req, res) => {
 
         const socketId = getSocketIdByUserId(leave.mechanicId._id.toString());
 
-        console.log(leave.mechanicId._id)
-
         if (socketId) {
             // Send new leave notification to mechanic
             io.to(socketId).emit('newNotification', notification);
