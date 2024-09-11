@@ -58,6 +58,8 @@ const updateMechanicTarget = require('../controller/admin/updateMechanicTarget')
 const getMechanicTargetByMechanicId = require('../controller/mechanic/getMechanicTargetByMechanicId');
 const getUserCount = require('../controller/admin/getUserCount');
 const getAllCustomerVehiclesCount = require('../controller/admin/getAllCustomerVehiclesCount');
+const paymentController = require('../controller/customer/paymentController');
+const paymentSuccess = require('../controller/customer/paymentSuccess');
 
 // Router object
 const router = express.Router();
@@ -117,6 +119,10 @@ router.patch('/cancel-booking/:bookingId', authMiddleware, cancelBooking);
 router.patch('/update-customer-approval/:id', authMiddleware, updateCustomerApproval);
 // Get service history by allocation
 router.get('/get-service-history-by-allocation/:allocationId',authMiddleware,getServiceHistoryByAllocation);
+// Payment
+router.post('/create-payment-session',authMiddleware,paymentController);
+// Payment success
+router.post('/payment-success',authMiddleware,paymentSuccess);
 
 // --- Routes for admin ---
 // Service packages
