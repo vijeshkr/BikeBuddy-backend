@@ -5,7 +5,7 @@ const { sendVerificationEmail } = require('../../common/utils');
 
 // Signup controller
 const signup = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
 
     // Checking all fields filled or not
@@ -37,6 +37,7 @@ const signup = async (req, res) => {
                 existingUser.name = name;
                 existingUser.password = hashedPassword;
                 existingUser.verificationToken = verificationToken;
+                existingUser.role = role;
                 await existingUser.save();
 
                 // Send verification email with new link
@@ -54,7 +55,8 @@ const signup = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            verificationToken
+            verificationToken,
+            role
 
         });
 
