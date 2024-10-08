@@ -86,7 +86,7 @@ const addNewBooking = async (req, res) => {
                 // Send new booking notification to admin
                 io.to(socketId).emit('newNotification', notification);
                 // TODO: Send real time booking updates to admin like this
-                // io.to(socketId).emit('newLeaveRequest', leaveWithMechanic);
+                // io.to(socketId).emit('newBooking', bookingData);
             }
         }
 

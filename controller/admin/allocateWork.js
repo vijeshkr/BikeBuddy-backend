@@ -47,6 +47,17 @@ const allocateWork = async (req, res) => {
             select: '-password' // Exclude password from mechanicId if needed
         });
 
+        // Get populated allocation
+        const allocatedJob = await allocationModel.findById( savedAllocation._id )
+        .populate({
+            path: 'bookingId',
+            populate: [
+                {path: 'vehicleId'},
+                {path: 'serviceType'},
+                {path: 'customerId', select: '-password'},
+            ]
+        });
+
         // Create notification for the mechanic
         const notification = await notificationModel.create({
             userId: mechanicId,
@@ -59,8 +70,8 @@ const allocateWork = async (req, res) => {
         if (socketId) {
             // Send new allocation notification to mechanic
             io.to(socketId).emit('newNotification', notification);
-            // TODO: Send real time allocation updates to the allocated mechanic like this
-            // io.to(socketId).emit('leaveStatusUpdate', updatedLeave);
+            // Send real time allocation updates to the allocated mechani
+            io.to(socketId).emit('jobAllocation', allocatedJob);
         }
 
         // Respond with success message and populated booking
