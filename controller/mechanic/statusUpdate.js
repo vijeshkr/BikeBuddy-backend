@@ -30,7 +30,7 @@ const statusUpdate = async (req, res) => {
 
         // Respond with success message and updated booking data
         res.status(200).json({
-            message: 'Booking cancelled successfully',
+            message: 'Status updated successfully',
             success: true,
             data: booking
         });

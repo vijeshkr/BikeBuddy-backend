@@ -4,12 +4,6 @@
 - [Introduction](#introduction)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ## Introduction
 
@@ -47,7 +41,7 @@
 - **Real-Time Updates:** Provides real-time notifications based on user actions.
 
 ## Technologies Used
-- **Frontend:** React.js, Redux Toolkit, Tailwind CSS, Bootstrap
+- **Frontend:** React.js, Redux Toolkit, Tailwind CSS
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
 - **Real-time Communication:** Socket.IO
